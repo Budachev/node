@@ -30,7 +30,7 @@ const removeNote = () => {
 }
 
 const getAll = () => {
-    console.log('get all')
+    console.log('get all');
 }
 
 module.exports = {
