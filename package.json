@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/Budachev/node#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "lodash": "^4.17.4",
+    "request": "^2.79.0",
     "yargs": "^6.6.0"
   }
 }

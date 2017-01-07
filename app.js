@@ -1,16 +1,44 @@
 const fs = require('fs');
-//const os = require('os');
 const _ = require('lodash');
 const yargs = require('yargs');
+
 const notes = require('./notes');
 
 const action = process.argv[2];
-const args = yargs.argv;
+
+const titleArgOpts = {
+    describe: 'Title of a note',
+    demand: true,
+    alias: 't'
+};
+
+const bodyArgOpts = {
+    describe: 'Body of a note',
+    demand: true,
+    alias: 'b'
+};
+
+const args = yargs
+    .command('add', 'Add new note', {
+        title: titleArgOpts,
+        body: bodyArgOpts,
+    })
+    .command('list', 'List all notes')
+    .command('read', 'Read note', {
+        title: titleArgOpts
+    })
+    .command('remove', 'Remove a note', {
+        title: titleArgOpts
+    })
+    .help()
+    .argv;
 
 if (action == 'add') {
-    notes.addNote(args.title, args.body);
+    const note = notes.addNote(args.title, args.body);
+    note ? console.log('Success!') : console.log("This title is in use.");
+} else if (action == 'remove') {
+    const removed = notes.removeNote(args.title);
+    removed ? console.log(`Succesfully removed ${args.title} note`) : console.log("No such note was found");
+} else if (action == 'list') {
+    notes.getAll().forEach(note => notes.logNote(note));
 }
-
-//const user = os.userInfo(); 
-
-// fs.appendFile('greetings.txt', `Hello ${user.username}`)

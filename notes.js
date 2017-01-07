@@ -1,41 +1,54 @@
 const fs = require('fs');
 
-const addNote = (title, body) => {
+const logNote = note => {
+    console.log(`Note: ${note.title} ${note.body}`);
+}
 
-    let notes = [];
-    let note = { title, body };
-
+const fetchNotes = () => {
     try {
-        notes = JSON.parse(fs.readFileSync('notes.json'));
+        return JSON.parse(fs.readFileSync('notes.json'));
     } catch (e) {
         console.warn('Creating file');
+        return [];
     }
+}
+
+const saveNotes = (notes) => {
+    fs.writeFileSync('notes.json', JSON.stringify(notes));
+}
+
+const addNote = (title, body) => {
+
+    let notes = fetchNotes();
+
+    let note = { title, body };
 
     let duplicate = notes.find(note => note.title === title);
-    
+
     if (!duplicate) {
         notes.push(note);
 
-        fs.writeFileSync('notes.json', JSON.stringify(notes));
+        saveNotes(notes);
+        return note;
     }
-
+    
 }
 
-const getNote = () => {
+const getNote = (title) => { fetchNotes().filter(note => note.title !== title) };
 
+const removeNote = (title) => {
+    const notes = fetchNotes();
+    const updatedNotes = notes.filter(note => note.title !== title);
+    saveNotes(updatedNotes);
+    return notes.length === updatedNotes.length ? false : true;
 }
 
-const removeNote = () => {
-
-}
-
-const getAll = () => {
-    console.log('get all');
-}
+const getAll = () => fetchNotes();
 
 module.exports = {
     addNote,
     getNote,
     removeNote,
-    getAll
+    getAll,
+    logNote
 }
