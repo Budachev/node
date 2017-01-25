@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha mongo/**/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,19 @@
   "homepage": "https://github.com/Budachev/node#readme",
   "dependencies": {
     "axios": "^0.15.3",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
     "lodash": "^4.17.4",
-    "request": "^2.79.0",
+    "mocha": "^3.2.0",
+    "mongodb": "^2.2.22",
+    "mongoose": "^4.7.8",
     "yargs": "^6.6.0"
+  },
+  "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0",
+    "expect": "^1.20.2",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0",
+    "supertest": "^2.0.1"
   }
 }
